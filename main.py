@@ -13,27 +13,28 @@ Builder.load_string('''
     t_addr: addr
     t_status: status
     t_website: website
-    
-    GridLayout:
-        cols: 2
-        width: 500
-        height: 50
-        pos: root.a_width-500, root.a_height -50
         
-        TextInput:
-            id: website
-        Button:
-            text: 'Test'
-            on_press: root.test()
-    
-    Label:
-        id: status
-        pos: (root.a_width-50)/2, (root.a_height)/2
-        text: 'Test Websites for SQL Vunrabilities'
+    TextInput:
+        id: website
+        pos: 0,root.top-50
+        size: root.width-200,50
+    Button:
+        text: 'Test'
+        size: 200,50
+        pos: root.width-200, root.top-50
+        on_press:
+            status.text = "Testing For Vunrabilities..."
+            status.color = (1, .5, 0, 1)
+        
+        on_release: root.test()
         
     GridLayout:
         cols: 1
-        pos: (root.a_width-50)/2, (root.a_height-100)/2
+        pos: root.center
+
+        Label:
+            id: status
+            text: "Test Websites for SQL Vunrabilities"
         
         Label:
             id: addr
@@ -45,9 +46,6 @@ Builder.load_string('''
 ''')
 
 class TestSite(Widget):
-
-    a_width = Window.width
-    a_height = Window.height
     
     t_ftp = ObjectProperty(None)
     t_addr = ObjectProperty(None)
@@ -56,6 +54,7 @@ class TestSite(Widget):
 
     #This function tests port 21 for an open ftp port
     #If it is open an ftp attack is likely
+    
     def ftest(self):
         try:
             url = self.t_website.text
@@ -71,7 +70,7 @@ class TestSite(Widget):
                 
             else:
                 self.t_ftp.text  = "Port 21 is Close. Site Not Vunerable to FTP Attacks"
-                self.t_ftp.color = (0, 1, 0, 1)
+                self.t_ftp.color = (1, 0, 0, 1)
                     
             sock.close()
             
@@ -81,6 +80,7 @@ class TestSite(Widget):
 
     #This tests a php webpage for any possibility of an SQL injection attack
     #If it is vunerable it will give the user the ip address of the website
+            
     def stest(self):
         
         try:
@@ -99,19 +99,21 @@ class TestSite(Widget):
                 self.t_addr.text = "ip address: %s" %gethostbyname(url[0])
 
             else:
+                self.t_addr.text = ""
                 self.t_status.text = "No SQL Vunrabilities Detected"
                 self.t_status.color = (1, 0, 0, 1)
                 
         except:
             self.t_status.text = """
             Make sure the site is in the format:
-              http://www.example.com/page.php
+               http://www.example.com/page.php
             If you are testing for an SQL Vunrability
             
             (Also Check Your Internet Connection)"""
             self.t_status.color = (1, .5, 0, 1)
 
-    #This will call both test functions when the 'Test' button is pressed        
+    #This will call both test functions when the 'Test' button is pressed
+            
     def test(self):
         self.stest()
         self.ftest()
