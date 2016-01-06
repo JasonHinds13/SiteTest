@@ -1,7 +1,6 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
-from kivy.core.window import Window
 from kivy.properties import ObjectProperty
 
 from urllib2 import Request, urlopen
