@@ -19,6 +19,7 @@ Builder.load_string('''
     Button:
         text: 'Test'
         size: 200,50
+        background_color: 0,.5,1,1
         pos: root.width-200, root.top-50
         on_press:
             status.text = "Testing For Vunrabilities..."
