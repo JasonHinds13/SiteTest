@@ -2,6 +2,10 @@
 #from kivy.config import Config
 #Config.set('graphics', 'fullscreen', '0')
 
+#------ Notes ------#
+# Port Scan Slow on Windows
+# Test Button Should Become a Drop Menu for Separate Tests
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
@@ -21,8 +25,12 @@ Builder.load_string('''
         size: 200,50
         background_color: 0,.5,1,1
         pos: root.width-200, root.top-50
+        
         on_press:
             status.text = "Testing For Vunrabilities..."
+            addr.text = ""
+            ftp.text = ""
+            sport.text = ""
             status.color = (1, .5, 0, 1)
         
         on_release: root.test()
@@ -41,10 +49,38 @@ Builder.load_string('''
         Label:
             id: ftp
             text: ""
+        Label:
+            id: sport
+            text: ""
 
 ''')
 
 class TestSite(Widget):
+
+    def portScan(self):
+        try:
+            url = self.ids.website.text
+            url = url.replace("http://www.", "")
+            url = url.split("/")
+
+            sock = socket(AF_INET, SOCK_STREAM)
+
+            self.ids.sport.text = "Open Ports: "
+            self.ids.sport.color = (0, 1, 0, 1)
+
+            for port in range(1, 1025):
+                test = sock.connect_ex((url[0],port))
+
+                #If port is open - port number is concatinated to string
+                if test == 0:
+                    s = str(port) + ", "
+                    self.ids.sport.text  += s
+                        
+            sock.close()
+                
+        except:
+            self.ids.sport.text = "Error - No Port Scan available"
+            self.ids.sport.color = (1, 0, 0, 1)
 
     #This function tests port 21 for an open ftp port
     #If it is open an ftp attack is likely
@@ -99,18 +135,17 @@ class TestSite(Widget):
                 
         except:
             self.ids.status.text = """
-            Make sure the site is in the format:
-               http://www.example.com/page.php
-            If you are testing for an SQL Vunrability
-            
-            (Also Check Your Internet Connection)"""
+            Make sure the site is in the format: http://www.example.com/page.php
+                        If you are testing for an SQL Vunrability            
+                           (Also Check Your Internet Connection)"""
             self.ids.status.color = (1, .5, 0, 1)
 
-    #This will call both test functions when the 'Test' button is pressed
+    #This will call all test functions when the 'Test' button is pressed
             
     def test(self):
         self.stest()
         self.ftest()
+        self.portScan()
     
 class TestSiteApp(App):
     
