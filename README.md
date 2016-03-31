@@ -1,4 +1,4 @@
-# SiteTest
+# About SiteTest
 Application written in Python using the Kivy open source library that tests websites for vunerabilities. Written using python 2.7
 
 # Current Features
