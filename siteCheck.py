@@ -8,7 +8,7 @@ def portScan(url):
         url = url.replace("http://www.", "")
         url = url.split("/")
 
-        for port in range(1, 81):
+        for port in range(1, 1025):
 
             sock = socket(AF_INET, SOCK_STREAM)
 
