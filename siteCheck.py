@@ -3,12 +3,12 @@ from urllib2 import Request, urlopen
 from socket import socket, gethostbyname, AF_INET, SOCK_STREAM
 
 #This function checks for open ports
-def portScan(url):
+def portScan(url, limit):
     try:
         url = url.replace("http://www.", "")
         url = url.split("/")
 
-        for port in range(1, 1025):
+        for port in range(1, limit+1):
 
             sock = socket(AF_INET, SOCK_STREAM)
 
@@ -73,7 +73,8 @@ def help():
     print "[*] '-h' [For help]"
     print "[*] '-s' <name of site> [To check for sql injection attack]"
     print "[*] '-f' <name of site> [To check for ftp vunerability]"
-    print "[*] '-p' <name of site> [To do a scan for open ports]"
+    print "[*] '-p' <name of site> [To scan for open ports up to default]"
+    print "[*] '-p' <name of site> -l <# of ports to check> [To scan for open ports up to specified]"
 
 def main():
     try:
@@ -83,8 +84,11 @@ def main():
         elif sys.argv[1] == '-f':
             ftpTest(sys.argv[2])
 
-        elif sys.argv[1] == '-p':
-            portScan(sys.argv[2])
+        elif sys.argv[1] == '-p' and len(sys.argv) <=3:
+            portScan(sys.argv[2], 1024)
+
+        elif sys.argv[1] == '-p' and sys.argv[3] == '-l':
+            portScan(sys.argv[2], int(sys.argv[4]))
 
         elif sys.argv[1] == '-h':
             help()
