@@ -13,6 +13,6 @@ This was written using python 2.7
 * To test for sql vunerability <code>python siteCheck.py -s http://www.example.com/page.php</code>
 * To test for ftp vunerability <code>python siteCheck.py -f http://www.example.com</code>
 * To run a port scan <code>python siteCheck.py -p http://www.example.com</code>
-* To run a port scan and specify how many to scan<code>python siteCheck.py -p http://www.example.com -l 1025</code>
+* To run a port scan and specify how many to scan <code>python siteCheck.py -p http://www.example.com -l 1025</code>
 
 # Issues
