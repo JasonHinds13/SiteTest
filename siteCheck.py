@@ -29,6 +29,8 @@ def ftpTest(url):
         url = url.split("/")
 
         sock = socket(AF_INET, SOCK_STREAM)
+        sock.settimeout(0.5)
+        
         test = sock.connect_ex((url[0],21))
 
         if test == 0:
@@ -44,7 +46,6 @@ def ftpTest(url):
 
 #This tests a php webpage for any possibility of an SQL injection attack
 def sqlTest(url):
-
     try:
         if "http://www." not in url:
             url.strip("www.") #if www. is at the beginning
@@ -97,6 +98,7 @@ def main():
 
     except:
         print "[-] Error - Check Your Command"
+        help()
 
 if __name__ == "__main__":
     main()
