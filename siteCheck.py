@@ -5,6 +5,8 @@ from socket import socket, gethostbyname, AF_INET, SOCK_STREAM
 #This function checks for open ports
 def portScan(url, limit):
     try:
+        print "[*] Attempting To Scan %s Ports on %s..." %(limit,url)
+
         url = url.replace("http://www.", "")
         url = url.split("/")
 
@@ -25,12 +27,14 @@ def portScan(url, limit):
 #This function tests for an open ftp port which makes it vunerable
 def ftpTest(url):
     try:
+        print "[*] Attempting To Test For FTP Vunerability on %s..." %url
+
         url = url.replace("http://www.", "")
         url = url.split("/")
 
         sock = socket(AF_INET, SOCK_STREAM)
         sock.settimeout(0.5)
-        
+
         test = sock.connect_ex((url[0],21))
 
         if test == 0:
@@ -47,6 +51,8 @@ def ftpTest(url):
 #This tests a php webpage for any possibility of an SQL injection attack
 def sqlTest(url):
     try:
+        print "[*] Attempting To Test For SQL Vunerability on %s..." %url
+
         if "http://www." not in url:
             url.strip("www.") #if www. is at the beginning
             url = "http://www."+url
