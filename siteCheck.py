@@ -27,7 +27,7 @@ def portScan(url, limit):
 #This function tests for an open ftp port which makes it vunerable
 def ftpTest(url):
     try:
-        print "[*] Attempting To Test For FTP Vunerability on %s..." %url
+        print "[*] Attempting To Test For FTP Vulnerability on %s..." %url
 
         url = url.replace("http://www.", "")
         url = url.split("/")
@@ -38,10 +38,10 @@ def ftpTest(url):
         test = sock.connect_ex((url[0],21))
 
         if test == 0:
-            print "[+] Port 21 is Open. Site May Be Vunerable to FTP Attacks"
+            print "[+] Port 21 is Open. Site May Be Vulnerable to FTP Attacks"
 
         else:
-            print "[+] Port 21 is Close. Site Not Vunerable to FTP Attacks"
+            print "[+] Port 21 is Close. Site Not Vulnerable to FTP Attacks"
 
         sock.close()
 
@@ -63,14 +63,14 @@ def sqlTest(url):
         page = response.read()
 
         if ("Error" in page) and ("SQL" in page):
-            print "[+] Site May be Vunerable to SQL injection Attacks"
+            print "[+] Site May be Vulnerable to SQL injection Attacks"
 
             url = url.replace("http://www.", "")
             url = url.split("/")
             print "[+] ip address: %s" %gethostbyname(url[0])
 
         else:
-            print "[+] No SQL Vunrabilities Detected"
+            print "[+] No SQL Vulnerabilities Detected"
 
     except:
         print "[-] Some Error Occured While Testing"
@@ -79,32 +79,32 @@ def sqlTest(url):
 def help():
     print "[*] '-h' [For help]"
     print "[*] '-s' <name of site> [To check for sql injection attack]"
-    print "[*] '-f' <name of site> [To check for ftp vunerability]"
+    print "[*] '-f' <name of site> [To check for ftp vulnerability]"
     print "[*] '-p' <name of site> [To scan for open ports up to default]"
     print "[*] '-p' <name of site> -l <# of ports to check> [To scan for open ports up to specified]"
 
 def main():
-    try:
-        if sys.argv[1] == '-s':
-            sqlTest(sys.argv[2])
 
-        elif sys.argv[1] == '-f':
-            ftpTest(sys.argv[2])
+    if sys.argv[1] == '-s':
+        sqlTest(sys.argv[2])
 
-        elif sys.argv[1] == '-p' and len(sys.argv) <=3:
-            portScan(sys.argv[2], 1024)
+    elif sys.argv[1] == '-f':
+        ftpTest(sys.argv[2])
 
-        elif sys.argv[1] == '-p' and sys.argv[3] == '-l':
-            portScan(sys.argv[2], int(sys.argv[4]))
+    elif sys.argv[1] == '-p' and len(sys.argv) <=3:
+        portScan(sys.argv[2], 1024)
 
-        elif sys.argv[1] == '-h':
-            help()
+    elif sys.argv[1] == '-p' and sys.argv[3] == '-l':
+        portScan(sys.argv[2], int(sys.argv[4]))
 
-        print "" #leave some space
+    elif sys.argv[1] == '-h':
+        help()
 
-    except:
+    else:
         print "[-] Error - Check Your Command"
         help()
+
+    print "" #leave some space
 
 if __name__ == "__main__":
     main()
