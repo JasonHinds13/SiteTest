@@ -7,7 +7,7 @@ Application written in python 2.7
 * Port Scanner
 
 # Use
-* To view the help menu <code>python siteCheck.py -h</code>
+* To view the help menu <code>python siteCheck.py -h</code> or <code>python siteCheck.py --help</code>
 * To test for SQL vunerability <code>python siteCheck.py -s http://www.example.com/page.php?id=1</code>
 * To test for FTP vunerability <code>python siteCheck.py -f http://www.example.com</code>
 * To run a port scan <code>python siteCheck.py -p http://www.example.com</code>
