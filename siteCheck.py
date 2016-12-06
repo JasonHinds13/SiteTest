@@ -82,7 +82,7 @@ def sqlTest(url):
         print "[-] Make sure the site is in the format: http://www.example.com/page.php"
 
 def help():
-    print "[*] '-h' [For help]"
+    print "[*] '-h' or '--help' [For help]"
     print "[*] '-s' <name of site> [To check for sql injection attack]"
     print "[*] '-f' <name of site> [To check for ftp vulnerability]"
     print "[*] '-p' <name of site> [To scan for open ports up to default]"
@@ -102,7 +102,7 @@ def main():
     elif sys.argv[1] == '-p' and sys.argv[3] == '-l':
         portScan(sys.argv[2], int(sys.argv[4]))
 
-    elif sys.argv[1] == '-h':
+    elif sys.argv[1] == '-h' or sys.argv[1] == '--help':
         help()
 
     else:
