@@ -18,12 +18,16 @@ def portScan(url, limit):
             sock.settimeout(0.5)
             test = sock.connect_ex((url[0],port))
 
+            sys.stdout.write("\rScanning Port: %s" %port)
+            sys.stdout.flush()
+
             if test == 0:
-                print "[+] Port: %s" %port
+                print "\n[+] Port: %s" %port
 
             sock.close()
+        print "\n[*] Finished Scanning %s Ports" %limit
     except:
-        print "[*] Error - No Port Scan available"
+        print "\n[*] Error - No Port Scan available"
 
 #This function tests for an open ftp port which makes it vunerable
 def ftpTest(url):
