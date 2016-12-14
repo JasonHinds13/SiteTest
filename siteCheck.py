@@ -90,7 +90,11 @@ def help():
 
 def main():
 
-    if sys.argv[1] == '-s':
+    if len(sys.argv) < 2:
+        print "[*] No System Arguments Supplied\n"
+        help()
+
+    elif sys.argv[1] == '-s':
         sqlTest(sys.argv[2])
 
     elif sys.argv[1] == '-f':
